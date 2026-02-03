@@ -1,4 +1,4 @@
-namespace UserManagementApp.Application.Exceptions
+namespace UserManagementApp.Domain.Exceptions
 {
     public class EntityNotFoundException : Exception
     {

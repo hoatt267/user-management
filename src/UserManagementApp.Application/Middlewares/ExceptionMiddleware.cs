@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using UserManagementApp.Application.Exceptions;
 using UserManagementApp.Application.ViewModels;
 using UserManagementApp.Domain.Exceptions;
 

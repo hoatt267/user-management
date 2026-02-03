@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using UserManagementApp.Application.Features.Users.Queries.GetUsers;
 using UserManagementApp.Domain.Repositories;
 using UserManagementApp.Infrastructure.DatabaseContext;
 using UserManagementApp.Infrastructure.Repositories.Generic;
@@ -39,6 +40,9 @@ namespace UserManagementApp.API
         {
             var assembly = Assembly.GetExecutingAssembly();
             builder.Services.AddAutoMapper(assembly);
+
+            // Register MediatR handlers from Application assembly
+            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUsersQuery).Assembly));
         }
 
         private static void RegisterInfrastructure(WebApplicationBuilder builder)
