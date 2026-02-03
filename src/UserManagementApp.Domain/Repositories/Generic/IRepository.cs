@@ -1,0 +1,47 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using UserManagementApp.Domain.Values;
+namespace UserManagementApp.Domain.Repositories
+{
+    public interface IRepository<T> where T : class
+    {
+        Task<TResult?> GetAsync<TResult>(
+        Expression<Func<T, TResult>>? selector = null,
+        Expression<Func<T, bool>>? predicate = null,
+        Func<IQueryable<T>, IQueryable<T>>? include = null,
+        Func<IQueryable<T>, IQueryable<T>>? orderBy = null,
+        bool disableTracking = false
+        );
+
+        Task<IEnumerable<TResult>> GetListAsync<TResult>(
+            Expression<Func<T, TResult>>? selector = null,
+            Expression<Func<T, bool>>? predicate = null,
+            Func<IQueryable<T>, IQueryable<T>>? include = null,
+            Func<IQueryable<T>, IQueryable<T>>? orderBy = null,
+            bool disableTracking = false
+        );
+
+        Task<PaginatedList<TResult>> GetPaginatedListAsync<TResult>(
+            int pageNumber,
+            int pageSize,
+            Expression<Func<T, TResult>>? selector = null,
+            Expression<Func<T, bool>>? predicate = null,
+            Func<IQueryable<T>, IQueryable<T>>? include = null,
+            Func<IQueryable<T>, IQueryable<T>>? orderBy = null,
+            bool disableTracking = false
+        );
+
+        Task<T> AddAsync(T entity);
+
+        Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities);
+
+        Task UpdateRangeAsync(IEnumerable<T> entities);
+
+        Task SaveChangesAsync();
+
+        Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate);
+    }
+}

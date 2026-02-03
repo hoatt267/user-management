@@ -1,2 +1,8 @@
 <Solution>
+  <Folder Name="/src/">
+    <Project Path="src/UserManagementApp.API/UserManagementApp.API.csproj" />
+    <Project Path="src/UserManagementApp.Application/UserManagementApp.Application.csproj" />
+    <Project Path="src/UserManagementApp.Domain/UserManagementApp.Domain.csproj" />
+    <Project Path="src/UserManagementApp.Infrastructure/UserManagementApp.Infrastructure.csproj" />
+  </Folder>
 </Solution>
