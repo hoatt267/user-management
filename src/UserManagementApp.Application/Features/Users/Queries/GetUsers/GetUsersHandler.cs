@@ -26,8 +26,8 @@ namespace UserManagementApp.Application.Features.Users.Queries.GetUsers
         public async Task<PaginatedList<UserDto>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
             var users = await _userRepository.GetPaginatedListAsync(
-                pageNumber: request.userFilter.PageNumber,
-                pageSize: request.userFilter.PageSize,
+                pageNumber: request.userFilter.PageNumber ?? 1,
+                pageSize: request.userFilter.PageSize ?? 10,
                 selector: u => _mapper.Map<UserDto>(u),
                 predicate: u => string.IsNullOrEmpty(request.userFilter.SearchKey)
                                 || u.FullName.Contains(request.userFilter.SearchKey)

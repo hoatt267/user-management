@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using UserManagementApp.Application.ViewModels;
 using UserManagementApp.Domain.Exceptions;
@@ -22,6 +23,10 @@ namespace UserManagementApp.Application.Middlewares
             try
             {
                 await _next(context);
+            }
+            catch (ValidationException ex)
+            {
+                await HandleValidationExceptionAsync(context, ex);
             }
             catch (DataInvalidException ex)
             {
@@ -51,6 +56,28 @@ namespace UserManagementApp.Application.Middlewares
             {
                 await HandleExceptionAsync(context, ex, ex.Message, StatusCodes.Status500InternalServerError);
             }
+        }
+
+        private async Task HandleValidationExceptionAsync(HttpContext context, ValidationException exception)
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+
+            var errors = exception.Errors
+                .GroupBy(e => e.PropertyName)
+                .ToDictionary(
+                    g => g.Key,
+                    g => g.Select(e => e.ErrorMessage).ToArray());
+
+            var response = new GeneralResponse()
+            {
+                Success = false,
+                Message = "Validation failed",
+                Errors = errors
+            };
+
+            var jsonResponse = System.Text.Json.JsonSerializer.Serialize(response);
+            await context.Response.WriteAsync(jsonResponse);
         }
 
         private async Task HandleExceptionAsync<T>(HttpContext context, T exception, string userMessage, int statusCode) where T : Exception

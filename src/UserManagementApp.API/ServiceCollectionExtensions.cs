@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using UserManagementApp.Application.Common.Behaviors;
 using UserManagementApp.Application.Features.Users.Queries.GetUsers;
 using UserManagementApp.Domain.Repositories;
 using UserManagementApp.Infrastructure.DatabaseContext;
@@ -39,10 +41,17 @@ namespace UserManagementApp.API
         private static void RegisterServices(WebApplicationBuilder builder)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            builder.Services.AddAutoMapper(assembly);
+            builder.Services.AddAutoMapper(typeof(GetUsersQuery).Assembly);
 
-            // Register MediatR handlers from Application assembly
-            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUsersQuery).Assembly));
+            // Register FluentValidation
+            builder.Services.AddValidatorsFromAssembly(typeof(GetUsersQuery).Assembly);
+
+            // Register MediatR handlers from Application assembly with validation behavior
+            builder.Services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(typeof(GetUsersQuery).Assembly);
+                cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+            });
         }
 
         private static void RegisterInfrastructure(WebApplicationBuilder builder)
@@ -53,7 +62,7 @@ namespace UserManagementApp.API
                 options.AddPolicy(name: "MyPolicy",
                     policy =>
                     {
-                        policy.WithOrigins(builder.Configuration["AllowedClient:ClientUri"] ?? string.Empty)
+                        policy.WithOrigins(builder.Configuration["AllowedClient:ClientUri"] ?? throw new Exception("AllowedClient:ClientUri is not configured"))
                         .AllowCredentials()
                         .AllowAnyHeader()
                         .AllowAnyMethod();

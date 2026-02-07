@@ -14,13 +14,19 @@ namespace UserManagementApp.Domain.Entities
         public Role Role { get; private set; }
         public bool IsActive { get; private set; }
 
-        public User(string fullName, string email, Role role, bool isActive)
+        public User(string fullName, string email, Role role)
         {
             Id = Guid.NewGuid();
             FullName = fullName;
             Email = email;
             Role = role;
-            IsActive = isActive;
+        }
+
+        public void UpdateUser(string fullName, string email, Role role)
+        {
+            FullName = fullName;
+            Email = email;
+            Role = role;
         }
 
         public void Activate()

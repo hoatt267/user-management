@@ -10,5 +10,6 @@ namespace UserManagementApp.Application.ViewModels
         public bool Success { get; set; } = true;
         public string? Message { get; set; } = "Success";
         public object? Data { get; set; } = null;
+        public Dictionary<string, string[]>? Errors { get; set; } = null;
     }
 }
