@@ -22,6 +22,7 @@ This application provides a comprehensive user management system with features f
 ## ✨ Features
 
 ### User Management
+
 - ✅ **CRUD Operations**: Create, Read, Update users
 - 🔍 **Search & Filter**: Real-time search functionality
 - 📄 **Pagination**: Efficient data loading with customizable page sizes
@@ -30,6 +31,7 @@ This application provides a comprehensive user management system with features f
 - ✅ **Form Validation**: Client and server-side validation
 
 ### Technical Features
+
 - 🏗️ **Clean Architecture**: Separation of concerns across API, Application, Domain, and Infrastructure layers
 - 📨 **CQRS Pattern**: Using MediatR for command and query separation
 - 🎨 **Responsive Design**: Mobile-first UI with TailwindCSS
@@ -40,6 +42,7 @@ This application provides a comprehensive user management system with features f
 ## 🛠️ Tech Stack
 
 ### Backend
+
 - **Framework**: ASP.NET Core 10.0
 - **Database**: SQL Server 2022
 - **ORM**: Entity Framework Core 10.0
@@ -49,6 +52,7 @@ This application provides a comprehensive user management system with features f
 - **API Documentation**: Swagger/OpenAPI
 
 ### Frontend
+
 - **Framework**: React 19.2
 - **Language**: TypeScript 5.9
 - **Build Tool**: Vite 7.2
@@ -61,6 +65,7 @@ This application provides a comprehensive user management system with features f
 - **Icons**: Lucide React
 
 ### DevOps
+
 - **Containerization**: Docker & Docker Compose
 - **Database**: SQL Server (Docker container)
 - **Reverse Proxy**: Nginx (for frontend)
@@ -131,12 +136,14 @@ src/
 ### Quick Start with Docker
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository-url>
    cd user-management
    ```
 
 2. **Start all services**
+
    ```bash
    docker-compose up --build
    ```
@@ -151,11 +158,13 @@ src/
 #### Backend Setup
 
 1. **Navigate to API project**
+
    ```bash
    cd src/UserManagementApp.API
    ```
 
 2. **Update appsettings.Development.json**
+
    ```json
    {
      "ConnectionStrings": {
@@ -177,16 +186,19 @@ src/
 #### Frontend Setup
 
 1. **Navigate to client project**
+
    ```bash
    cd src/UserManagementApp.Client
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Create .env file**
+
    ```env
    VITE_API_BASE_URL=https://localhost:7117/api
    VITE_API_TIMEOUT=30000
@@ -216,13 +228,13 @@ user-management/
 
 ### Users
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/users` | Get paginated users list |
-| GET | `/api/users/{id}` | Get user by ID |
-| POST | `/api/users` | Create new user |
-| PUT | `/api/users/{id}` | Update user |
-| PATCH | `/api/users/{id}/status` | Toggle user active status |
+| Method | Endpoint                 | Description               |
+| ------ | ------------------------ | ------------------------- |
+| GET    | `/api/users`             | Get paginated users list  |
+| GET    | `/api/users/{id}`        | Get user by ID            |
+| POST   | `/api/users`             | Create new user           |
+| PUT    | `/api/users/{id}`        | Update user               |
+| PATCH  | `/api/users/{id}/status` | Toggle user active status |
 
 ### Query Parameters (GET /api/users)
 
@@ -233,6 +245,7 @@ user-management/
 ### Request/Response Examples
 
 #### Create User
+
 ```json
 POST /api/users
 {
@@ -244,6 +257,7 @@ POST /api/users
 ```
 
 #### Response Format
+
 ```json
 {
   "data": {
@@ -387,12 +401,14 @@ docker-compose up --build api
 ## 🔒 Validation
 
 ### Backend Validation
+
 - FluentValidation for command validation
 - Email format validation
 - Required field validation
 - Custom business rule validation
 
 ### Frontend Validation
+
 - Zod schema validation
 - React Hook Form integration
 - Real-time error display
@@ -401,12 +417,14 @@ docker-compose up --build api
 ## 🐛 Error Handling
 
 ### Backend
+
 - Global exception middleware
 - Custom exception types
 - Consistent error response format
 - Detailed error logging
 
 ### Frontend
+
 - Axios interceptors
 - Toast notifications for errors
 - Network error handling
