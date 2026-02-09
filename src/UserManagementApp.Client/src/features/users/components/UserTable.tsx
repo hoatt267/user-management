@@ -94,7 +94,9 @@ export const UserTable = () => {
     <div className="p-6 max-w-6xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-pink-300">User Management</h1>
+        <h1 className="text-2xl font-bold text-pink-300">
+          User Management TESSTSTTS
+        </h1>
       </div>
       <div>
         <button
