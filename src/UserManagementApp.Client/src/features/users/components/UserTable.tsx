@@ -35,8 +35,8 @@ export const UserTable = () => {
 
       setIsFormOpen(false);
       setEditingUser(null);
-    } catch {
-      // Error is already handled by the mutation's onError callback
+    } catch (e) {
+      console.error(e);
     }
   };
 

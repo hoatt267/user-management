@@ -3,14 +3,11 @@ services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
-    user: root
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=YourStrong@Password123 # Change this!
     ports:
       - "1434:1433"
-    volumes:
-      - sql_data:/var/opt/mssql/data
     healthcheck:
       test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "YourStrong@Password123" -C -Q "SELECT 1" || exit 1
       interval: 10s
@@ -43,6 +40,3 @@ services:
       - "3000:80"
     depends_on:
       - api
-
-volumes:
-  sql_data:

@@ -79,7 +79,7 @@ export const UserForm = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium">Role</label>
+            1<label className="block text-sm font-medium">Role</label>
             <select
               {...register("role")}
               className="w-full border rounded p-2 mt-1"
