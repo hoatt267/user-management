@@ -15,7 +15,10 @@ COPY src/UserManagementApp.Infrastructure/UserManagementApp.Infrastructure.cspro
 RUN dotnet restore src/UserManagementApp.API/UserManagementApp.API.csproj
 
 # Copy the rest of the source code
-COPY . .
+COPY src/UserManagementApp.API/ src/UserManagementApp.API/
+COPY src/UserManagementApp.Application/ src/UserManagementApp.Application/
+COPY src/UserManagementApp.Domain/ src/UserManagementApp.Domain/
+COPY src/UserManagementApp.Infrastructure/ src/UserManagementApp.Infrastructure/
 
 # Build and Publish the application to a folder named 'out'
 WORKDIR /app/src/UserManagementApp.API
