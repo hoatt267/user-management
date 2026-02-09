@@ -1,0 +1,76 @@
+name: Build and Deploy to Azure
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  ACR_LOGIN_SERVER: usermanagement.azurecr.io
+
+jobs:
+  # ========================================================
+  # JOB 1: BUILD & DEPLOY BACKEND (API)
+  # ========================================================
+  deploy-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Login to Azure Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.ACR_LOGIN_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build and Push Backend Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: src/UserManagementApp.API/Dockerfile
+          push: true
+          tags: ${{ env.ACR_LOGIN_SERVER }}/user-api:latest
+
+      - name: Deploy to Azure Web App (Backend)
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: "user-api-app-2026"
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_BE }}
+          images: "${{ env.ACR_LOGIN_SERVER }}/user-api:latest"
+
+  # ========================================================
+  # JOB 2: BUILD & DEPLOY FRONTEND (CLIENT)
+  # ========================================================
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    needs: deploy-backend
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Login to Azure Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.ACR_LOGIN_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build and Push Frontend Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: src/UserManagementApp.Client/Dockerfile
+          push: true
+          tags: ${{ env.ACR_LOGIN_SERVER }}/user-client:latest
+          build-args: |
+            VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }}
+
+      - name: Deploy to Azure Web App (Frontend)
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: "user-client-app-2026"
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_FE }}
+          images: "${{ env.ACR_LOGIN_SERVER }}/user-client:latest"

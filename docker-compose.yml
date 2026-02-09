@@ -1,0 +1,42 @@
+services:
+  # 1. Database
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=YourStrong@Password123 # Change this!
+    ports:
+      - "1434:1433"
+    healthcheck:
+      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "YourStrong@Password123" -C -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  # 2. Backend API
+  api:
+    build:
+      context: .
+      dockerfile: src/UserManagementApp.API/Dockerfile
+    container_name: user-api
+    ports:
+      - "8080:8080"
+    environment:
+      - ConnectionStrings__UserManagement=Server=sqlserver;Database=UserDb;User Id=sa;Password=YourStrong@Password123;TrustServerCertificate=True;
+      - AllowedClient__ClientUri=http://localhost:3000
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+
+  # 3. Frontend
+  client:
+    build:
+      context: .
+      dockerfile: src/UserManagementApp.Client/Dockerfile
+    container_name: user-client
+    ports:
+      - "3000:80"
+    depends_on:
+      - api

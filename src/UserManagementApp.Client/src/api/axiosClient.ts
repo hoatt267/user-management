@@ -17,8 +17,6 @@ axiosClient.interceptors.response.use(
       console.error(
         `API Error: ${error.response.status} - ${error.response.data.title}`,
       );
-      // Optional: Trigger a toast notification library here
-      // toast.error(error.response.data.detail);
     } else {
       console.error("Network Error:", error.message);
     }
