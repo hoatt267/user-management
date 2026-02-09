@@ -93,6 +93,8 @@ export const UserTable = () => {
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-pink-300">User Management</h1>
+      </div>
+      <div>
         <button
           onClick={() => {
             setEditingUser(null);
@@ -103,7 +105,6 @@ export const UserTable = () => {
           + Add User
         </button>
       </div>
-
       {/* Search */}
       <input
         type="text"
