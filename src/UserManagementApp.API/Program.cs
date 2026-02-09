@@ -15,6 +15,9 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+//chạy migration khi khởi động ứng dụng
+app.ApplyMigration();
+
 // Apply pending migrations automatically
 using (var scope = app.Services.CreateScope())
 {

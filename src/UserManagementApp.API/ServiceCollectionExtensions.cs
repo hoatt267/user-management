@@ -29,6 +29,30 @@ namespace UserManagementApp.API
             RegisterServices(builder);
         }
 
+        public static void ApplyMigration(this WebApplication app)
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var context = services.GetRequiredService<UserManagementAppDbContext>();
+
+                    // Kiểm tra xem có migration nào chưa chạy không rồi mới Migrate
+                    if (context.Database.GetPendingMigrations().Any())
+                    {
+                        context.Database.Migrate();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred while migrating the database.");
+                    throw;
+                }
+            }
+        }
+
         private static void SqlDatabaseOptions(SqlServerDbContextOptionsBuilder sqlOptions)
         {
             sqlOptions.EnableRetryOnFailure(
