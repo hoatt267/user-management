@@ -20,6 +20,7 @@ namespace UserManagementApp.Domain.Entities
             FullName = fullName;
             Email = email;
             Role = role;
+            IsActive = true;
         }
 
         public void UpdateUser(string fullName, string email, Role role)

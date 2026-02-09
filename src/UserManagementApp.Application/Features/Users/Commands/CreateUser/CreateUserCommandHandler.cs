@@ -6,6 +6,7 @@ using AutoMapper;
 using MediatR;
 using UserManagementApp.Application.Features.Users.DTOs;
 using UserManagementApp.Domain.Entities;
+using UserManagementApp.Domain.Enums;
 using UserManagementApp.Domain.Exceptions;
 using UserManagementApp.Domain.Repositories;
 
@@ -29,7 +30,7 @@ namespace UserManagementApp.Application.Features.Users.Commands.CreateUser
                 throw new ConflictException("Email already exists");
             }
 
-            var userEntity = _mapper.Map<User>(request);
+            var userEntity = new User(request.FullName, request.Email, Enum.Parse<Role>(request.Role, true));
 
             var newUser = await _userRepository.AddAsync(userEntity);
 

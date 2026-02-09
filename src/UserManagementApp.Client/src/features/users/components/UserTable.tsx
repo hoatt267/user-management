@@ -5,11 +5,13 @@ import { UserForm } from "./UserForm";
 import type { User, UserFormData } from "../types/user";
 import type { Column } from "../../../components/Table/type";
 import { DataTable } from "../../../components/Table/DataTable";
+import { useDebounce } from "../../../hooks/useDebounce";
 
 export const UserTable = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 500);
 
   const {
     users: paginatedData,
@@ -22,7 +24,7 @@ export const UserTable = () => {
   } = useUsers({
     pageNumber: page,
     pageSize,
-    searchKey: search,
+    searchKey: debouncedSearch,
   });
 
   const [editingUser, setEditingUser] = useState<User | null>(null);

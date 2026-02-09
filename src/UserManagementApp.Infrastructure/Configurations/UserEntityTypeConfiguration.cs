@@ -27,9 +27,6 @@ namespace UserManagementApp.Infrastructure.Configurations
                 .HasMaxLength(DataSchemaLength.SUPER_LARGE);
             builder.HasIndex(u => u.Email)
                 .IsUnique();
-
-            builder.Property(u => u.Role)
-                .HasDefaultValue(Role.User);
         }
     }
 }
