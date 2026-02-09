@@ -25,7 +25,7 @@ services:
       dockerfile: src/UserManagementApp.API/Dockerfile
     container_name: user-api
     ports:
-      - "8080:8080"
+      - "8080:80"
     environment:
       - ConnectionStrings__UserManagement=Server=sqlserver;Database=UserDb;User Id=sa;Password=YourStrong@Password123;TrustServerCertificate=True;
       - AllowedClient__ClientUri=http://localhost:3000
