@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UserManagementApp.Infrastructure.DatabaseContext;
 
@@ -11,9 +12,11 @@ using UserManagementApp.Infrastructure.DatabaseContext;
 namespace UserManagementApp.Infrastructure.Migrations
 {
     [DbContext(typeof(UserManagementAppDbContext))]
-    partial class UserManagementAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260209093605_AddCreatedDateProperty")]
+    partial class AddCreatedDateProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -13,6 +13,7 @@ namespace UserManagementApp.Domain.Entities
         public string Email { get; private set; }
         public Role Role { get; private set; }
         public bool IsActive { get; private set; }
+        public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
 
         public User(string fullName, string email, Role role)
         {
