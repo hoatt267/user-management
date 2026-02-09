@@ -61,6 +61,7 @@ export const UserForm = ({
             <input
               {...register("fullName")}
               className="w-full border rounded p-2 mt-1"
+              placeholder="Enter your name"
             />
             {errors.fullName && (
               <p className="text-red-500 text-xs">{errors.fullName.message}</p>
@@ -72,6 +73,7 @@ export const UserForm = ({
             <input
               {...register("email")}
               className="w-full border rounded p-2 mt-1"
+              placeholder="Enter email"
             />
             {errors.email && (
               <p className="text-red-500 text-xs">{errors.email.message}</p>
